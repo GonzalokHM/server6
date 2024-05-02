@@ -61,7 +61,6 @@ const seed = {
       description:
         'La Acrópolis de Atenas es una antigua cityela situada en la colina más alta de la city.',
     },
-    ,
     {
       name: 'Museo del Prado',
       city: 'Madrid',

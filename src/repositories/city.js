@@ -7,11 +7,20 @@ const {
   deleteFromDB,
 } = require('./index');
 
-const findAllCitiesDB = findAllDB(City);
-const findCityByIdDB = findByIdDB(City);
+const populatePath ={ path: 'monuments', select: 'name' }
+
+const findAllCitiesDB = findAllDB(City, populatePath);
+const findCityByIdDB = findByIdDB(City, populatePath);
 const createCityDB = createInDB(City);
 const updateCityDB = updatedByIdInDB(City);
 const deleteCityDB = deleteFromDB(City);
+
+const addMonumentToCity = async (cityId, monumentId) => {
+  await City.updateOne(
+    { _id: cityId },
+    { $push: { monuments: monumentId } }
+  );
+};
 
 const getCityWithMonumentsDB = async (cityId) => {
     const city = await City.findById(cityId).populate('monuments');
@@ -41,4 +50,5 @@ module.exports = {
   deleteCityDB,
   getCityWithMonumentsDB,
   modifyCityMonumentsDB,
+  addMonumentToCity
 };

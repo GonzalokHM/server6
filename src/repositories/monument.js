@@ -7,8 +7,11 @@ const {
     deleteFromDB,
   } = require('./index');
   
-  const findAllMonumentsDB = findAllDB(Monument);
-  const findMonumentByIdDB = findByIdDB(Monument);
+  const populatePath = { path: 'city', select: 'name' }
+
+
+  const findAllMonumentsDB = findAllDB(Monument, populatePath);
+  const findMonumentByIdDB = findByIdDB(Monument, populatePath);
   const createMonumentDB = createInDB(Monument);
   const updateMonumentDB = updatedByIdInDB(Monument);
   const deleteMonumentDB = deleteFromDB(Monument);

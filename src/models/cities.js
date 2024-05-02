@@ -3,12 +3,13 @@ const Schema = mongoose.Schema;
 
 const citySchema = new Schema({
     name: { type: String, required: true },
-    country: { type: String, required: true },
-    population: { type: Number, required: true },
-    monuments: [{ type: Schema.Types.ObjectId, ref: 'Monument' }]
+    country: { type: String },
+    population: { type: Number},
+    monuments: [{ type: mongoose.Types.ObjectId, ref: 'monument' }]
   },
-  { strict: false },
-  {timestamps: true},
+  { strict: false, 
+  collection: 'cities',
+  timestamps: true},
 );
 
 module.exports = citySchema

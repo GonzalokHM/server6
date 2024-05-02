@@ -3,16 +3,14 @@ const { cleanCollections, saveDocuments } = require("./db-functions");
 
 
 const main = async () => {
-  await cleanCollections();
-  const { cities, monuments} = await saveDocuments();
+  try {
+    await cleanCollections();
+    await saveDocuments();
+    console.log('Script Terminado');
+  } catch (err) {
+    console.error('Error lanzando script:', err);
+    process.exit(1);
+  }
 };
 
-main()
-  .then(() => {
-    console.log('Script Terminado');
-    process.exit();
-  })
-  .catch((err) => {
-    console.log('Error Lanzando Script', err);
-    process.exit(1);
-  });
+main().then(() => process.exit());

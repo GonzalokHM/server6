@@ -4,12 +4,11 @@ const Schema = mongoose.Schema;
 const monumentoSchema = new Schema(
   {
     name: { type: String, required: true },
-    description: { type: String, required: true },
-    ubication: { type: String, required: true },
-    City: { type: Schema.Types.ObjectId, ref: 'City' },
+    city: { type: mongoose.Types.ObjectId, ref: 'city' },
+    ubication: { type: String },
+    description: { type: String },
   },
-  { strict: false },
-  { timestamps: true }
+  { strict: false, collection: 'monuments', timestamps: true }
 );
 
 module.exports = monumentoSchema;

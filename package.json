@@ -2,7 +2,7 @@
   "name": "server6",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "node .",
     "seed": "node ./src/seed/index.js"

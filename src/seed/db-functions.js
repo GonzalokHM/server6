@@ -12,20 +12,24 @@ const cleanCollections = async () => {
 const saveDocuments = async () => {
   try {
     const cities = await City.insertMany(seed.cities);
+    console.log('>>> Ciudades insertadas con éxito!');
     // Crear un map de ciudades para obtener fácilmente el ID de referencia
     const cityMap = cities.reduce((map, city) => {
       map[city.name] = city._id;
       return map;
     }, {});
+    
+   
 
     // Agregar la referencia de ciudad a cada monumento antes de insertar
-    const monuments = await Monument.insertMany(
-      seed.monuments.map((monument) => ({
+    const monumentsData = seed.monuments.map(monument => ({
         ...monument,
         city: cityMap[monument.city], // Asignar el ID de la ciudad basado en el nombre
-      }))
-    );
+      }));
 
+      const monuments = await Monument.insertMany(monumentsData);
+      console.log('>>> Monumentos insertados con éxito!');
+      
     // Actualizar las ciudades con los monumentos correspondientes
     await Promise.all(
       cities.map(async (city) => {
@@ -41,6 +45,7 @@ const saveDocuments = async () => {
 
     console.log('>>> Documentos guardados con éxito!');
     return { cities, monuments };
+
   } catch (error) {
     console.error('Error guardando documentos:', error);
   }

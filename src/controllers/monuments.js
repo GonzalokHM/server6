@@ -7,12 +7,14 @@ const {
   findMonumentWithCityDB,
   changeCityOfMonumentDB,
 } = require('../repositories/monument');
+const {findAllCitiesDB,
+  createCityDB,addMonumentToCity} = require('../repositories/city')
 
 const getAllMonuments = async (req, res) => {
   try {
     const query = req.query;
     const monuments = await findAllMonumentsDB(query);
-    res.json(monuments);
+    res.status(200).json(monuments);
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -32,12 +34,28 @@ const getMonumentById = async (req, res) => {
 
 const createMonument = async (req, res) => {
   try {
-    const newMonument = await createMonumentDB(req.body);
+    const { name, city, ubication, description } = req.body;
+
+    let cityDoc = await findAllCitiesDB({ name: city });
+    if (!cityDoc.length) {
+      // Crear la ciudad si no existe
+      cityDoc = await createCityDB({ name: city });
+    } 
+    // Crear el monumento con la ciudad como ObjectId
+    const newMonument = await createMonumentDB({
+      name,
+      city: cityDoc._id, // Referencia de ObjectId
+      ubication,
+      description,
+    });
+      // Añadir el monumento a la ciudad
+      await addMonumentToCity(cityDoc._id, newMonument._id);
+
     res.status(201).json(newMonument);
   } catch (error) {
-    res.status(400).send(error.message);
-  }
+    res.status(400).send(error.message);  }
 };
+
 
 const updateMonument = async (req, res) => {
   try {

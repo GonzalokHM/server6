@@ -1,12 +1,12 @@
-const findAllDB = (model) => async () => {
+const findAllDB = (model, populatePath = {}) => async (query={}) => {
   const items = await model.find({
     name: { $regex: new RegExp(query.name,'i') },
-  });
+  }).populate(populatePath.path,populatePath.select);
   return items;
 };
 
-const findByIdDB = (model) => async (id) => {
-  const item = await model.findById(id);
+const findByIdDB = (model, populatePath = {}) => async (id) => {
+  const item = await model.findById(id).populate(populatePath.path,populatePath.select);
   return item;
 };
 

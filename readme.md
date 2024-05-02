@@ -32,7 +32,7 @@
   - Respuesta: Detalles del monumento.
 
 - `POST /monuments`
-  - Descripción: Crea una nueva monumento.
+  - Descripción: Crea una nuevo monumento.
   - Cuerpo de la solicitud: Datos del nuevo monumento.
 
 - `PUT /monuments/:id`
